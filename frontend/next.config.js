@@ -14,6 +14,14 @@ const nextConfig = {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react', 'axios']
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: '/api/:path*',
+      },
+    ]
+  },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },

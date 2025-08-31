@@ -13,7 +13,7 @@ export default function Home() {
   const [queryResponse, setQueryResponse] = useState<string>('')
   const [queryLoading, setQueryLoading] = useState(false)
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api'
 
   const getFileIcon = (file: File) => {
     const type = file.type
@@ -43,13 +43,15 @@ export default function Home() {
         const file = files[i]
         setUploadStatus(`Uploading ${i + 1} of ${files.length}: ${file.name}`)
         
-        const formData = new FormData()
-        formData.append('file', file)
-
         try {
-          const response = await axios.post(`${API_BASE}/upload`, formData, {
+          // For serverless, send file content as JSON
+          const fileContent = await file.text()
+          const response = await axios.post(`${API_BASE}/upload`, {
+            content: fileContent,
+            filename: file.name
+          }, {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              'Content-Type': 'application/json',
             },
             timeout: 30000, // 30 second timeout
           })
