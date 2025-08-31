@@ -1,0 +1,7 @@
+--------------------------9K7YnNkOgpNBUY3LbjsjeX
+Content-Disposition: form-data; name="file"; filename="test_doc.txt"
+Content-Type: text/plain
+
+This is a test document about artificial intelligence and machine learning. It contains information about neural networks, deep learning, and natural language processing.
+
+--------------------------9K7YnNkOgpNBUY3LbjsjeX--
