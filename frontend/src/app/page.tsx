@@ -58,7 +58,8 @@ export default function Home() {
           results.push({ file: file.name, status: 'success', data: response.data })
         } catch (error) {
           console.error(`Upload error for ${file.name}:`, error)
-          results.push({ file: file.name, status: 'error', error: error.message })
+          const errorMessage = error instanceof Error ? error.message : 'Upload failed'
+          results.push({ file: file.name, status: 'error', error: errorMessage })
         }
       }
       
@@ -104,7 +105,7 @@ export default function Home() {
       setQueryResponse(displayResponse)
     } catch (error) {
       console.error('Query error:', error)
-      if (error.code === 'ECONNABORTED') {
+      if (error instanceof Error && 'code' in error && error.code === 'ECONNABORTED') {
         setQueryResponse('Query timeout - please try a shorter question or check if documents are uploaded.')
       } else {
         setQueryResponse('Error processing your question. Please try again.')
